@@ -14,20 +14,21 @@ namespace EmployeeWageComputation
             int dailyWage = 0;
             Random random = new Random();
             int check = random.Next(0, 3);
-            if (check == PART_TIME)
+            switch (check)
             {
-                dailyWage += WAGE_PER_HOUR * PART_TIME_HOUR;
-            }
-            if (check == FULL_TIME)
-            {
-                dailyWage += WAGE_PER_HOUR * FULL_DAY_HOUR;
-            }
-            if (check == ABSENT)
-            {
-                dailyWage = 0;
+                case PART_TIME:
+                    dailyWage += WAGE_PER_HOUR * PART_TIME_HOUR;
+                    break;
+                case FULL_TIME:
+                    dailyWage += WAGE_PER_HOUR * FULL_DAY_HOUR;
+                    break;
+                default:
+                    dailyWage = 0;
+                    break;
             }
 
             Console.WriteLine("The today Wage Of the Employee is :{0}", dailyWage);
+
 
         }
     }
