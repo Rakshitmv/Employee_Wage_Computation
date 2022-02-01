@@ -12,7 +12,7 @@ namespace EmployeeWageComputation
         {
             Console.WriteLine("-*-*-*-----Welcome to Employee Wage Computation Program-----*-*-*-");
             WageComputation wageComputation = new WageComputation();
-            wageComputation.Attendance();
+            wageComputation.CalculateEmployeeWage();
             Console.ReadLine();
         }
     }
