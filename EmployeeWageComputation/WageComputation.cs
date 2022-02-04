@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NLog;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,35 +9,52 @@ namespace EmployeeWageComputation
 {
     public class WageComputation
     {
-        public void CalculateEmployeeWage()
-        {
-            const int PART_TIME = 0, FULL_TIME = 1, WAGE_PER_HOUR = 20, FULL_DAY_HOUR = 8, PART_TIME_HOUR = 4, WORKING_DAYS = 20, MAX_WORK_HOUR = 100;
-            int monthlyWage = 0;
-            int workingHour = 0;
-            Random random = new Random();
-            for (int i = 0; i < WORKING_DAYS && MAX_WORK_HOUR >= workingHour; i++)
+
+            const int TOTAL_WORKING_HRS = 100, TOTAL_WORKING_DAYS = 20, WAGE_PER_HR = 20, FULL_DAY_HR = 8, FULL_TIME = 0, PART_TIME = 1, PART_TIME_HR = 4;
+            public static int CalculateEmployeeWage(string company, int empWagePerHour, int numOfWorkingDays, int maxHoursPerMonth)
             {
-                int check = random.Next(0, 3);
-                switch (check)
+                int empHrs = 0, totalEmpHrs = 0, totalWorkingDays = 0;
+                while (totalEmpHrs <= maxHoursPerMonth && totalWorkingDays < numOfWorkingDays)
                 {
-                    case PART_TIME:
-                        monthlyWage += WAGE_PER_HOUR * PART_TIME_HOUR;
-                        workingHour += PART_TIME_HOUR;
-                        break;
-                    case FULL_TIME:
-                        monthlyWage += WAGE_PER_HOUR * FULL_DAY_HOUR;
-                        workingHour += FULL_DAY_HOUR;
-                        break;
-                    default:
-                        monthlyWage += 0;
-                        break;
+                    totalWorkingDays++;
+                    Random random = new Random();
+                    int empCheck = random.Next(0, 3);
+                    switch (empCheck)
+                    {
+                        case FULL_TIME:
+                            empHrs = FULL_DAY_HR;
+                            break;
+                        case PART_TIME:
+                            empHrs = PART_TIME_HR;
+                            break;
+                        default:
+                            empHrs = 0;
+                            break;
+                    }
+                    totalEmpHrs += empHrs;
+                    Console.WriteLine("Day : " + totalWorkingDays + " Emp Hours : " + empHrs);
                 }
+
+                int totalEmpWage = totalEmpHrs * WAGE_PER_HR;
+                Console.WriteLine("Total Employee wage : " + totalEmpWage);
+                return totalEmpWage;
             }
-            Console.WriteLine("The Monthly Wage Of the Employee is :{0} and Total Working hour was {1}", monthlyWage, workingHour);
+            public void Data()
+            {
+                Console.Write("Enter Company Name : ");
+                string companyName = Convert.ToString(Console.ReadLine());
+                Console.Write("Enter Emp Wage Per Hour : ");
+                int empWagePerHour = Convert.ToInt32(Console.ReadLine());
+                Console.Write("Enter No. of Working Days : ");
+                int workingDays = Convert.ToInt32(Console.ReadLine());
+                Console.Write("Enter Max Working Hours Per Month : ");
+                int maxHours = Convert.ToInt32(Console.ReadLine());
+
+                CalculateEmployeeWage(companyName, empWagePerHour, workingDays, maxHours);
+            }
 
 
 
-
-        }
+        
     }
 }
